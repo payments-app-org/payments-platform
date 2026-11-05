@@ -4,3 +4,4 @@ com.paymentsapp.platform.outbox.OutboxAutoConfiguration
 com.paymentsapp.platform.kafka.DeadLetterAutoConfiguration
 com.paymentsapp.platform.scheduling.SchedulerLockAutoConfiguration
 com.paymentsapp.platform.resilience.ResilienceAutoConfiguration
+com.paymentsapp.platform.cache.CacheAutoConfiguration
