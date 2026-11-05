@@ -1,0 +1,18 @@
+package com.paymentsapp.platform.error;
+
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
+import org.springframework.http.ProblemDetail;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+// Обработчик по умолчанию: свои @ExceptionHandler сервиса имеют приоритет
+@RestControllerAdvice
+@Order(Ordered.LOWEST_PRECEDENCE)
+public class DomainExceptionHandler {
+
+    @ExceptionHandler(DomainException.class)
+    public ProblemDetail domainRejected(DomainException e) {
+        return Problems.of(e);
+    }
+}

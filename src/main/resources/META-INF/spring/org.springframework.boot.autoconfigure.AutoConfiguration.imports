@@ -1,0 +1,6 @@
+com.paymentsapp.platform.time.TimeAutoConfiguration
+com.paymentsapp.platform.error.ErrorAutoConfiguration
+com.paymentsapp.platform.outbox.OutboxAutoConfiguration
+com.paymentsapp.platform.kafka.DeadLetterAutoConfiguration
+com.paymentsapp.platform.scheduling.SchedulerLockAutoConfiguration
+com.paymentsapp.platform.resilience.ResilienceAutoConfiguration
