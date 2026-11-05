@@ -1,6 +1,7 @@
 package com.paymentsapp.platform.openapi;
 
 import com.paymentsapp.platform.error.ErrorCode;
+import com.paymentsapp.platform.error.InputError;
 import com.paymentsapp.platform.error.Problems;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
@@ -91,9 +92,11 @@ public class OpenApiAutoConfiguration {
                 .addProperty(Problems.CODE_PROPERTY, code);
     }
 
-    // Код → текст; у нескольких констант может быть один код — берём первый текст
+    // Код → текст; у нескольких констант может быть один код — берём первый текст.
+    // Коды формата запроса (InputError) есть у всех сервисов.
     private static Map<String, String> errorCodes(List<Class<?>> enums) {
         Map<String, String> codes = new LinkedHashMap<>();
+        Arrays.stream(InputError.values()).forEach(c -> codes.putIfAbsent(c.code(), c.template()));
         if (enums == null) {
             return codes;
         }

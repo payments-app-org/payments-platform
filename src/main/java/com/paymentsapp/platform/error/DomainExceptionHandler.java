@@ -6,9 +6,10 @@ import org.springframework.http.ProblemDetail;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-// Обработчик по умолчанию: свои @ExceptionHandler сервиса имеют приоритет
+// Второй уровень — бизнес-отказы сервиса (DomainException). Порядок: свои @ExceptionHandler сервиса и этот —
+// раньше InputErrorHandler, у которого есть «последний рубеж» на любое исключение
 @RestControllerAdvice
-@Order(Ordered.LOWEST_PRECEDENCE)
+@Order(Ordered.LOWEST_PRECEDENCE - 1)
 public class DomainExceptionHandler {
 
     @ExceptionHandler(DomainException.class)

@@ -29,6 +29,11 @@ public class IdempotentResults<T> {
         return Boolean.TRUE.equals(stored) ? result : find(id).orElse(result);
     }
 
+    // Промежуточный итог сменился окончательным (долгий перевод завершился): перезаписываем, срок хранения — заново
+    public void replace(Object id, T result) {
+        redis.opsForValue().set(key(id), json.writeValueAsString(result), ttl);
+    }
+
     public Optional<T> find(Object id) {
         return Optional.ofNullable(redis.opsForValue().get(key(id))).map(value -> json.readValue(value, type));
     }
