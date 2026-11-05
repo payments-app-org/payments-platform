@@ -12,7 +12,7 @@ public final class Problems {
 
     public static ProblemDetail of(ErrorCode code, String detail) {
         ProblemDetail problem = ProblemDetail.forStatusAndDetail(code.status(), detail);
-        problem.setProperty(CODE_PROPERTY, code.name());
+        problem.setProperty(CODE_PROPERTY, code.code());
         return problem;
     }
 
