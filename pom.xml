@@ -21,6 +21,7 @@
         <java.version>21</java.version>
         <shedlock.version>7.10.1</shedlock.version>
         <resilience4j.version>2.4.0</resilience4j.version>
+        <springdoc.version>3.2.0</springdoc.version>
     </properties>
 
     <dependencies>
@@ -55,6 +56,13 @@
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-redis</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <!-- Swagger: описание API и схема ошибок — только у сервисов со springdoc -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-common</artifactId>
+            <version>${springdoc.version}</version>
             <optional>true</optional>
         </dependency>
         <dependency>

@@ -2,6 +2,7 @@ package com.paymentsapp.platform.cache;
 
 import java.util.Map;
 import java.util.stream.Collectors;
+import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -12,6 +13,7 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.interceptor.CacheErrorHandler;
 import org.springframework.cache.interceptor.LoggingCacheErrorHandler;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Role;
 import org.springframework.core.env.Environment;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
@@ -24,6 +26,8 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 @ConditionalOnBean(RedisConnectionFactory.class)
 @ConditionalOnProperty(prefix = "platform.cache", name = "enabled", havingValue = "true")
 @EnableCaching
+// Инфраструктурный бин: CachingConfigurer создаётся рано, его не нужно обрабатывать прочими BeanPostProcessor (наблюдение и т. п.)
+@Role(BeanDefinition.ROLE_INFRASTRUCTURE)
 @EnableConfigurationProperties(CacheProperties.class)
 public class CacheAutoConfiguration implements CachingConfigurer {
 
