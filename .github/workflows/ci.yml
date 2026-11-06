@@ -1,0 +1,20 @@
+# CI библиотеки — шаблон из payments-ci. Тег vX.Y.Z — публикация версии в GitHub Packages.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+    tags: ["v*"]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  ci:
+    uses: payments-app-org/payments-ci/.github/workflows/java-library.yml@v1
+    secrets: inherit
+    permissions:
+      contents: read
+      packages: write
