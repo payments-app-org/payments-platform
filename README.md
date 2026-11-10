@@ -1,14 +1,20 @@
 # payments-platform
 
-Общая инфраструктурная библиотека сервисов `payments-app-org`: outbox, DLT для Kafka, доменные ошибки и обработка ошибок формата запроса, время (`Clock`), хэши, ShedLock, ResilientCalls, кэш, `IdempotentResults`, схема ошибок для Swagger. Подключается зависимостью и включается автоконфигурацией Spring Boot. Предметного кода здесь нет — только инфраструктура.
+Общая инфраструктурная библиотека сервисов `payments-app-org`: outbox, DLT для Kafka, доменные ошибки и обработка ошибок формата запроса, время (`Clock`), хэши, ShedLock, ResilientCalls, кэш, `IdempotentResults`, схема ошибок для Swagger, метрики для Prometheus и трассировка (OpenTelemetry). Подключается зависимостью и включается автоконфигурацией Spring Boot. Предметного кода здесь нет — только инфраструктура.
 
 ```xml
 <dependency>
     <groupId>com.paymentsapp</groupId>
     <artifactId>platform</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
 </dependency>
 ```
+
+## Наблюдаемость (с 1.1.0)
+
+- **Метрики**: реестр Prometheus и метка `application` (= `spring.application.name`) на всех метриках. Сервис открывает `/actuator/prometheus`: `management.endpoints.web.exposure.include: health,info,prometheus`.
+- **Трассы**: Micrometer Tracing → OpenTelemetry → OTLP. Куда отправлять — `management.opentelemetry.tracing.export.otlp.endpoint`, доля запросов — `management.tracing.sampling.probability`; задаёт окружение (в Kubernetes — `payments-deploy/envs/<окружение>/env.yaml`). Адрес не задан — трассы никуда не отправляются, ошибок нет.
+- **Логи в JSON** (ECS) с `traceId` и `spanId` — тоже настройка окружения: `logging.structured.format.console: ecs`.
 
 ## Новая версия
 
