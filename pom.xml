@@ -13,7 +13,7 @@
 
     <groupId>com.paymentsapp</groupId>
     <artifactId>platform</artifactId>
-    <version>1.1.0</version>
+    <version>1.2.0</version>
     <name>platform</name>
     <description>Общая инфраструктура сервисов: outbox, доменные ошибки, DLT для Kafka, часовой пояс, хэши, блокировки планировщиков, метрики и трассировка</description>
 
