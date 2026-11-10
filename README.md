@@ -6,7 +6,7 @@
 <dependency>
     <groupId>com.paymentsapp</groupId>
     <artifactId>platform</artifactId>
-    <version>1.2.0</version>
+    <version>1.2.1</version>
 </dependency>
 ```
 
@@ -14,7 +14,7 @@
 
 - **Метрики**: реестр Prometheus и метка `application` (= `spring.application.name`) на всех метриках. Сервис открывает `/actuator/prometheus`: `management.endpoints.web.exposure.include: health,info,prometheus`.
 - **Трассы**: Micrometer Tracing → OpenTelemetry → OTLP. Куда отправлять — `management.opentelemetry.tracing.export.otlp.endpoint`, доля запросов — `management.tracing.sampling.probability`; задаёт окружение (в Kubernetes — `payments-deploy/envs/<окружение>/env.yaml`). Адрес не задан — трассы никуда не отправляются, ошибок нет.
-- **Без `/actuator/**`** (с 1.2.0): пробы Kubernetes и сбор метрик Prometheus не создают трасс и метрик запросов — в Jaeger только настоящие запросы.
+- **Без `/actuator/**`** (с 1.2.0): пробы Kubernetes и сбор метрик Prometheus не создают трасс и метрик запросов — в Jaeger только настоящие запросы. Служебные команды Redis (`INFO` проверки здоровья, `HELLO`/`CLIENT`/`PING` при подключении) тоже без трасс (с 1.2.1); команды Redis внутри запросов и задач остаются в их трассах.
 - **Логи в JSON** (ECS) с `traceId` и `spanId` — тоже настройка окружения: `logging.structured.format.console: ecs`.
 
 ## Новая версия
