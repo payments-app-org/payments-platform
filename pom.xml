@@ -13,9 +13,9 @@
 
     <groupId>com.paymentsapp</groupId>
     <artifactId>platform</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
     <name>platform</name>
-    <description>Общая инфраструктура сервисов: outbox, доменные ошибки, DLT для Kafka, часовой пояс, хэши, блокировки планировщиков</description>
+    <description>Общая инфраструктура сервисов: outbox, доменные ошибки, DLT для Kafka, часовой пояс, хэши, блокировки планировщиков, метрики и трассировка</description>
 
     <!-- Публикация версий в GitHub Packages (аналог корпоративного Nexus): mvn deploy по тегу vX.Y.Z в CI -->
     <distributionManagement>
@@ -129,6 +129,32 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
+        </dependency>
+
+        <!-- Наблюдаемость — у каждого сервиса одинаково, поэтому здесь, а не в pom.xml сервисов.
+             Метрики для Prometheus: /actuator/prometheus (сервис добавляет prometheus в management.endpoints) -->
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-micrometer-metrics</artifactId>
+        </dependency>
+        <!-- Трассировка: Micrometer Tracing → OpenTelemetry → отправка по OTLP (адрес — management.opentelemetry.
+             tracing.export.otlp.endpoint; не задан — трассы никуда не отправляются). Не spring-boot-starter-opentelemetry:
+             он ещё и отправляет метрики по OTLP, а метрики у нас забирает Prometheus -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-micrometer-tracing-opentelemetry</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-tracing-bridge-otel</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.opentelemetry</groupId>
+            <artifactId>opentelemetry-exporter-otlp</artifactId>
         </dependency>
 
         <dependency>
