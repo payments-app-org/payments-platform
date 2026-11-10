@@ -13,7 +13,7 @@
 
     <groupId>com.paymentsapp</groupId>
     <artifactId>platform</artifactId>
-    <version>1.2.0</version>
+    <version>1.2.1</version>
     <name>platform</name>
     <description>Общая инфраструктура сервисов: outbox, доменные ошибки, DLT для Kafka, часовой пояс, хэши, блокировки планировщиков, метрики и трассировка</description>
 
@@ -80,6 +80,12 @@
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-redis</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <!-- Клиент Redis — для фильтра наблюдений (служебные команды Redis без трасс); у сервисов он и так есть -->
+        <dependency>
+            <groupId>io.lettuce</groupId>
+            <artifactId>lettuce-core</artifactId>
             <optional>true</optional>
         </dependency>
         <!-- Swagger: описание API и схема ошибок — только у сервисов со springdoc -->
